@@ -24,7 +24,7 @@ from homeassistant.components.sensor import ENTITY_ID_FORMAT
 import os
 import json
 
-from .const import DOMAIN, CONF_TOKEN, CONF_METER_ID, CONF_DECIMAL
+from .const import DOMAIN, CONF_TOKEN, CONF_METER_ID, CONF_DECIMAL, CONF_SHOW_ET_ONLY
 from .moj_elektro_api import MojElektroApi  # Ensure this matches the actual location and name
 import logging
 from datetime import timedelta
@@ -39,10 +39,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     token = entry.data[CONF_TOKEN]
     meter_id = entry.data[CONF_METER_ID]
     decimal = entry.data.get(CONF_DECIMAL)
+    show_et_only = entry.data.get(CONF_SHOW_ET_ONLY)
     session = async_get_clientsession(hass)
 
 
-    api = MojElektroApi(token, meter_id, decimal, session)
+    api = MojElektroApi(token, meter_id, decimal, show_et_only, session)
 
     # Initialize the update coordinator
     coordinator = DataUpdateCoordinator(

@@ -4,7 +4,7 @@ import aiohttp
 import logging
 from dateutil import parser
 
-from .const import SETUP_TAG_15_ARRAY, SETUP_TAG_ARRAY, READING_TYPE_ARRAY, SETUP_TAG_BLOCKS_ARRAY
+from .const import SETUP_TAG_15_ARRAY, SETUP_TAG_ARRAY, SETUP_TAG_ARRAY_ET_ONLY, READING_TYPE_ARRAY, SETUP_TAG_BLOCKS_ARRAY
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -12,10 +12,11 @@ class MojElektroApi:
     """Class to interact with the MojElektro API."""
 
 
-    def __init__(self, token, meter_id, decimal, session):
+    def __init__(self, token, meter_id, decimal, show_et_only, session):
         self.token = token
         self.meter_id = meter_id
         self.decimal = int(decimal) if decimal is not None else 4
+        self.show_et_only = show_et_only
         self.session = session
         self.cache = None
         self.cache_date = None
